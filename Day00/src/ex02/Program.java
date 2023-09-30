@@ -14,8 +14,8 @@ public class Program {
         System.out.println("Count of coffee-request – "+ counter);
     }
 
-    static int SumOfDigit(int x) {
-        int res = 0;
+    static long SumOfDigit(int x) {
+        long res = 0;
         while(x != 0) {
             res += x % 10;
             x /= 10;
@@ -23,10 +23,10 @@ public class Program {
         return res;
     }
 
-    static boolean CheckSimple(int x) {
+    static boolean CheckSimple(long x) {
         int sqrt = (int)Math.ceil(Math.sqrt(x));
         boolean flag = true;
-        for(int i = 2; i <= sqrt; ++i) {
+        for(int i = 2; i <= sqrt && i < x; ++i) {
             if(x%i == 0) {
                 flag = false;
                 break;

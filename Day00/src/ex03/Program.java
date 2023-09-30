@@ -7,15 +7,13 @@ public class Program {
     static int counter;
 
     public static void main(String[] args) {
-        int weeks = GetWeek();
-
-        PrintWeek(weeks);
+        PrintWeek(GetWeek());
     }
 
-    static int GetWeek() {
+    static long GetWeek() {
         Scanner scanner = new Scanner(System.in);
 
-        int res = 0;
+        long res = 0;
         String line = scanner.nextLine();
         while(!line.equals("42")) {
             if (!line.equals("Week " + (counter + 1))) {
@@ -36,7 +34,7 @@ public class Program {
         return res;
     }
 
-    static void PrintWeek(int weeks){
+    static void PrintWeek(long weeks){
         for(int i = 0; i < counter; ++i) {
             System.out.print("Week " + (i + 1) + " ");
             for(int j = 0; j < (weeks%10); ++j) {
