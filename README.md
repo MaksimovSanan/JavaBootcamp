@@ -1,4 +1,4 @@
-#JavaBootcamp
+# JavaBootcamp
 
 - [___Day00:___](https://github.com/MaksimovSanan/JavaBootcamp/tree/main/Day00)
     _Structures and arrays. Today you will learn the basics of solving both trivial and more challenging business tasks using basic Java language constructs._
