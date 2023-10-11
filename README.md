@@ -59,3 +59,53 @@ The program shall accept as an argument the absolute path to the folder where we
 `mv` WHAT WHERE – enables to transfer or rename a file if WHERE contains a file name without a path.
 `ls` – displays the current folder contents (file and subfolder names and sizes in KB)
 `cd FOLDER_NAME` – changes the current directory
+
+## [Day03](https://github.com/MaksimovSanan/JavaBootcamp/tree/main/Day03)
+Threads. Today you will learn how to use basic multithreading mechanisms in Java.
+
+- [ex00](https://github.com/MaksimovSanan/JavaBootcamp/tree/main/Day03/src/ex00) The truth is born in a dispute—let's assume that each thread provides its own answer. The thread that has the last word is right.
+You need to implement the operation of two threads. Each of them must display its answer a few times, for example, 50:
+```
+$ java Program --count=50
+Egg
+Hen
+Hen
+Hen
+...
+Egg
+```
+In this case, the egg thread wins. However, the program also contains main thread. Inside the thread,  public static void main(String args[]) method is executed. We need this thread to display all its responses at the end of program execution. Thus, the ultimate variant is as follows:
+```
+$ java Program --count=50
+Egg
+Hen
+Hen
+...
+Egg
+Hen
+...
+Human
+...
+...
+Human
+```
+It means that the program outputs Human message 50 times, which main thread prints.
+
+- [ex01](https://github.com/MaksimovSanan/JavaBootcamp/tree/main/Day03/src/ex01) Let's orchestrate the argument. Now, each thread can provide its answer only after another thread has done so. Let's assume that the egg thread always answers first. To solve this task, we recommend to explore Producer-Consumer model operation principle
+
+- [ex02](https://github.com/MaksimovSanan/JavaBootcamp/tree/main/Day03/src/ex02) Try to use multithreading for its intended purpose: distribute computations across the program.
+Let's assume there is an array of integer values. Your goal is to calculate the sum of array elements using several "summing" threads. Each thread computes a certain section inside the array. The number of elements in each section is constant, except for the last one (its size can differ upward or downward).
+The array shall be randomly generated each time. Array length and the number of threads are passed as command-line arguments.
+To make sure the program operates correctly, we should start by calculating the sum of array elements using a standard method.
+
+- [ex03](https://github.com/MaksimovSanan/JavaBootcamp/tree/main/Day03/src/ex03) Let's assume that we need to download a list of files from a network. Some files are downloaded faster, while others are slower.
+To implement this functionality, we can obviously use multithreaded downloading where each thread loads a specific file. But what should we do if there are too many files? A large number of threads cannot be run at the same time. Therefore, many of them will be waiting.
+In addition, we should bear in mind that continuously creating and completing threads is a very costly operation we should avoid. It makes more sense to start N threads at once and, when either of them finishes downloading the file, it can take on the next file in the queue.
+We need to create files_urls.txt file (file name shall be explicitly specified in program code) where you specify a list of URLs of files to be downloaded, for instance:
+```
+1 https://i.pinimg.com/originals/11/19/2e/11192eba63f6f3aa591d3263fdb66bd5.jpg
+2 https://pluspng.com/img-png/balloon-hd-png-balloons-png-hd-2750.png
+3 https://i.pinimg.com/originals/db/a1/62/dba162603c71cac00d3548420c52bac6.png
+4 https://pngimg.com/uploads/balloon/balloon_PNG4969.png
+5 http://tldp.org/LDP/intro-linux/intro-linux.pdf
+```
