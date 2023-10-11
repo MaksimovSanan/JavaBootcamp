@@ -46,3 +46,16 @@ Mike -> John, +500, INCOME, transaction ID
 To recover the connection within such pairs, identifiers of each transaction should be used.
 A transfer entry may obviously be lost in such a complex system—it may not be recorded for one of the users (to emulate and debug such a situation, a developer needs to be able to remove the transfer data from one of users individually). Since such situations are realistic, functionality is required for displaying all "unacknowledged transfers" (transactions recorded for one user only) and resolving such issues.
 Below is a set of exercises you can do one by one to solve the task.
+
+## [Day02](https://github.com/MaksimovSanan/JavaBootcamp/tree/main/Day02)
+IO and Files. Today you will learn how to use input/output in Java and implement programs to manipulate a file system.
+
+- [ex00](https://github.com/MaksimovSanan/JavaBootcamp/tree/main/Day02/src/ex00) You need to implement an application that accepts the signatures.txt as an input (you should describe it on your own; the file name is explicitly stated in the program code). It contains a list of file types and their respective signatures in the HEX format. During execution, your program shall accept full paths to files on hard disk and keep the type which file signature corresponds to. The result of program execution should be written to result.txt file. If a signature cannot be defined, the execution result is UNDEFINED
+
+- [ex01](https://github.com/MaksimovSanan/JavaBootcamp/tree/main/Day02/src/ex01) Your goal is to implement an application that accepts two files as an input (both files are passed as command-line arguments) and displays their similarity comparison outcome (cosine measure).
+
+- [ex02](https://github.com/MaksimovSanan/JavaBootcamp/tree/main/Day02/src/ex02) Let's implement a utility handling the files. The application shall display information about the files, folder content and size, and provide moving/renaming functionality. In essence, the application emulates a command line of Unix-like systems.
+The program shall accept as an argument the absolute path to the folder where we start to work, and support the following commands:
+`mv` WHAT WHERE – enables to transfer or rename a file if WHERE contains a file name without a path.
+`ls` – displays the current folder contents (file and subfolder names and sizes in KB)
+`cd FOLDER_NAME` – changes the current directory
