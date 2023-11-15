@@ -46,7 +46,7 @@ public class MessagesRepositoryJdbcImpl implements MessageRepository{
                             null
                     ),
                     resultSet.getString("text"),
-                    resultSet.getTimestamp("date").toLocalDateTime()
+                    resultSet.getTimestamp("date") != null ? resultSet.getTimestamp("date").toLocalDateTime() : null
                     );
             return Optional.of(message);
         }

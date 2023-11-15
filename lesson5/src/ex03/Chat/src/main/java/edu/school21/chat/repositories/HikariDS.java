@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.logging.Logger;
 
-public class HikariDS{
+public class HikariDS {
         private static final DataSource dataSource;
         private static final HikariConfig config = new HikariConfig();
         static {
@@ -21,8 +21,8 @@ public class HikariDS{
             config.setConnectionTimeout(50000);
             dataSource = new HikariDataSource(config);
         }
-        public static DataSource getDataSource {
-            return dataSource;
-    }
 
+        public static DataSource getDataSource(){
+            return dataSource;
+        }
 }

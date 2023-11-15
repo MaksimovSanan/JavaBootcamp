@@ -11,14 +11,14 @@ import java.util.Optional;
  * Hello world!
  *
  */
-public class App 
+public class Program
 {
     public static void main( String[] args )
     {
         System.out.println( "Hello World!03" );
 
         MessageRepository messageRepository = new MessagesRepositoryJdbcImpl(HikariDS.getDataSource());
-        Optional<Message> messageOptional = messageRepository.findById(10);
+        Optional<Message> messageOptional = messageRepository.findById(12);
         if(messageOptional.isPresent()) {
             Message message = messageOptional.get();
             message.setText("Bye");

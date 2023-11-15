@@ -6,15 +6,22 @@ import edu.school21.chat.models.Chatroom;
 import edu.school21.chat.models.Message;
 import edu.school21.chat.models.User;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.List;
 import java.util.Optional;
 
 public class MessagesRepositoryJdbcImpl implements MessageRepository{
 
+    private final javax.sql.DataSource dataSource;
+
+    public MessagesRepositoryJdbcImpl(javax.sql.DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     @Override
     public Optional<Message> findById(int id) {
-        try(Connection con = DataSource.getConnection()) {
+        try(Connection con = dataSource.getConnection()) {
             PreparedStatement stmt = con.prepareStatement
                     ("SELECT " +
                             "m.id, m.text, m.date, u.id AS user_id, u.login AS user_login, u.password AS user_password, room.id AS room_id, room.name AS room_name " +
@@ -40,7 +47,7 @@ public class MessagesRepositoryJdbcImpl implements MessageRepository{
                             null
                     ),
                     resultSet.getString("text"),
-                    resultSet.getTimestamp("date").toLocalDateTime()
+                    resultSet.getTimestamp("date") != null ? resultSet.getTimestamp("date").toLocalDateTime() : null
                     );
             return Optional.of(message);
         }
@@ -52,7 +59,7 @@ public class MessagesRepositoryJdbcImpl implements MessageRepository{
 
     @Override
     public void delete(Message message) {
-        try(Connection con = DataSource.getConnection()){
+        try(Connection con = dataSource.getConnection()){
             PreparedStatement stmt = con.prepareStatement
                     ("DELETE FROM messages WHERE id = ?");
             stmt.setInt(1, message.getId());
@@ -71,7 +78,7 @@ public class MessagesRepositoryJdbcImpl implements MessageRepository{
         }
 
         try {
-            Connection con = DataSource.getConnection();
+            Connection con = dataSource.getConnection();
             Statement stmt = con.createStatement();
             ResultSet resultSet = stmt.executeQuery("SELECT * FROM users WHERE id = " + message.getAuthor().getId());
             if(!resultSet.next()) throw new NotSavedSubEntityException("USER NOT FOUND");
@@ -83,7 +90,7 @@ public class MessagesRepositoryJdbcImpl implements MessageRepository{
             System.out.println(e.getMessage());
         }
 
-        try(Connection con = DataSource.getConnection()){
+        try(Connection con = dataSource.getConnection()){
             PreparedStatement stmt =  con.prepareStatement
                     ("INSERT INTO messages (author_id, room_id, text, date) VALUES (?, ?, ?, ?)", new String[] {"id"});
             stmt.setInt(1, message.getAuthor().getId());
@@ -103,7 +110,7 @@ public class MessagesRepositoryJdbcImpl implements MessageRepository{
 
     @Override
     public void update(Message message) {
-        try(Connection con = DataSource.getConnection()){
+        try(Connection con = dataSource.getConnection()){
             PreparedStatement stmt =  con.prepareStatement
                     ("UPDATE messages SET author_id = ?, room_id = ?, text = ?, date = ? WHERE id = ?");
 
@@ -134,23 +141,6 @@ public class MessagesRepositoryJdbcImpl implements MessageRepository{
 //            System.out.println(e);
 //        }
         return null;
-    }
-
-    private static class DataSource {
-        private static HikariDataSource dataSource;
-        private static HikariConfig config = new HikariConfig();
-        static {
-            config.setJdbcUrl("jdbc:postgresql://localhost:5432/chatserver");
-            config.setUsername("postgres");
-            config.addDataSourceProperty("password", "postgres");
-            config.setMaximumPoolSize(10);
-            config.setConnectionTimeout(50000);
-            dataSource = new HikariDataSource(config);
-        }
-
-        public static Connection getConnection() throws SQLException {
-            return dataSource.getConnection();
-        }
     }
 }
 
